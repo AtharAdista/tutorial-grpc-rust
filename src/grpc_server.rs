@@ -15,12 +15,6 @@ use services::{payment_service_server::{PaymentService, PaymentServiceServer}, P
 #[derive(Default)]
 pub struct MyPaymentService{}
 
-#[derive(Default)]
-pub struct MyTransactionService{}
-
-#[derive(Default)]
-pub struct MyChatService{}
-
 #[tonic::async_trait]
 impl PaymentService for MyPaymentService {
     async fn process_payment(
@@ -31,6 +25,9 @@ impl PaymentService for MyPaymentService {
         Ok(Response::new(PaymentResponse {success: true}))
     }
 }
+
+#[derive(Default)]
+pub struct MyTransactionService{}
 
 #[tonic::async_trait]
 impl TransactionService for MyTransactionService {
@@ -63,6 +60,9 @@ impl TransactionService for MyTransactionService {
     }
 }
 
+#[derive(Default)]
+pub struct MyChatService{}
+
 #[tonic::async_trait]
 impl ChatService for MyChatService {
     type ChatStream = ReceiverStream<Result<ChatMessage, Status>>;
@@ -89,8 +89,6 @@ impl ChatService for MyChatService {
         Ok(Response::new(ReceiverStream::new(rx)))
     }
 }
-
-
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
